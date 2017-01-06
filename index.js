@@ -25,7 +25,7 @@ LightAccessory.prototype.getState = function (callback) {
   this.log('Getting current state...');
 
   request.get({
-    url: `https://${this.serverAddress}/light/${this.lightId}`,
+    url: `${this.serverAddress}/light/${this.lightId}`,
     auth: { username: this.username, password: this.password },
   }, (err, response, body) => {
     if (!err && response.statusCode === 200) {
@@ -44,7 +44,7 @@ LightAccessory.prototype.setState = function (state, callback) {
   this.log('Set state to %s for light %s', lightState, this.lightId);
 
   request.get({
-    url: `https://${this.serverAddress}/groups/${this.lightId}/${lightState}/true`,
+    url: `${this.serverAddress}/groups/${this.lightId}/${lightState}/true`,
     auth: { username: this.username, password: this.password },
   }, (err, response, body) => {
     if (!err && response.statusCode === 200) {
