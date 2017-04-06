@@ -28,12 +28,12 @@ LightAccessory.prototype.getState = function (callback) {
     url: `${this.serverAddress}/light/${this.lightId}`,
     auth: { username: this.username, password: this.password },
   }, (err, response, body) => {
-    if (!err && response.statusCode === 200) {
+    if (!err && response && response.statusCode === 200) {
       this.log('Light state is %s', body);
       const on = body.trim() === '1';
       callback(null, on); // success
     } else {
-      this.log('Error getting state (status code %s): %s', response.statusCode, err);
+      this.log('Error getting state (status code %s): %s', response && response.statusCode, err);
       callback(err);
     }
   });
@@ -47,7 +47,7 @@ LightAccessory.prototype.setState = function (state, callback) {
     url: `${this.serverAddress}/groups/${this.lightId}/${lightState}/true`,
     auth: { username: this.username, password: this.password },
   }, (err, response, body) => {
-    if (!err && response.statusCode === 200) {
+    if (!err && response && response.statusCode === 200) {
       this.log('State change complete.');
       callback(null); // success
     } else {
